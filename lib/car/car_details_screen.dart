@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:navi/navigator_provider.dart';
+import 'package:navi/navigation.dart';
+import 'package:navi/routes.dart';
 
 class CarDetailsScreen extends ConsumerWidget {
   const CarDetailsScreen(this.model, {super.key});
@@ -9,6 +10,7 @@ class CarDetailsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    final navigator = ref.watch(naviNavigationStackProvider.notifier);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Car Details"),
@@ -16,7 +18,7 @@ class CarDetailsScreen extends ConsumerWidget {
       floatingActionButton: SizedBox(
         width: 120,
         child: FloatingActionButton(
-          onPressed: ref.watch(navigatorProvider).toggleStack,
+          onPressed: navigator.toggleStack,
           child: const Text("Change Stack"),
         ),
       ),
@@ -27,8 +29,8 @@ class CarDetailsScreen extends ConsumerWidget {
           children: [
             const Text("FaVe", style: TextStyle(fontSize: 32, color: Colors.white, fontWeight: FontWeight.w700),),
             ElevatedButton(
-                onPressed: () =>
-                    ref.watch(navigatorProvider).goToCarDetails("FaVe"),
+                onPressed: () => navigator.push(carDetailsPage("asd")),
+
                 child: const Text('Go to car details')),
           ],
         ),

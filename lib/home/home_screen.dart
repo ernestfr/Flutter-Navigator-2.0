@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:navi/navigator_provider.dart';
 import 'package:navi/routes.dart';
+import 'package:navi/navigation.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({
@@ -10,6 +10,8 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    final navigator = ref.watch(naviNavigationStackProvider.notifier);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Home"),
@@ -17,7 +19,7 @@ class HomeScreen extends ConsumerWidget {
       floatingActionButton: SizedBox(
         width: 120,
         child: FloatingActionButton(
-          onPressed: ref.watch(navigatorProvider).toggleStack,
+          onPressed: navigator.toggleStack,
           child: const Text("Change Stack"),
         ),
       ),
@@ -25,7 +27,7 @@ class HomeScreen extends ConsumerWidget {
       body: Center(
         child: ElevatedButton(
             onPressed: () =>
-                ref.watch(navigatorProvider).goToPage(characterPage),
+               navigator.push(characterPage),
             child: const Text('Go to character')),
       ),
     );
